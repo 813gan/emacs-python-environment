@@ -53,24 +53,16 @@ Thus, typically the default virtual environment path is
   :group 'python-environment)
 
 (defcustom python-environment-virtualenv
-  (list "virtualenv" "--system-site-packages" "--quiet")
-  ;; --quiet is required for Windows.  Without it, virtualenv raises
-  ;; UnicodeEncodeError
-  ;; See: https://github.com/tkf/emacs-jedi/issues/148#issuecomment-38290546
+  (list "python" "-m" "venv")
   "``virtualenv`` command to use, including command options.  List of strings.
 
 For example, if you want to use specific Python executable (to
-specify Python version), append ``--python`` option like this::
+specify Python version), run::
+(setq python-environment-virtualenv (list \"PATH/TO/bin/python\" \"-m\" \"venv\"))
 
-    (setq python-environment-virtualenv
-          (append python-environment-virtualenv
-                  '(\"--python\" \"PATH/TO/bin/python\")))
-
-I added ``--system-site-packages`` as default, but this is not
-mandatory.  If you don't like it, removing does not break
-anything (well, theoretically).  For reason why it is default,
-see discussion here:
-https://github.com/tkf/emacs-python-environment/issues/3"
+or set exec-path::
+    (let ((exec-path (cons \"PATH/TO/bin/python\" exec-path)))
+        (YOUR-CODE-HERE))"
   :group 'python-environment)
 
 (defvar python-environment--verbose nil)
